@@ -1,4 +1,4 @@
-Bu proje, Django ve JavaScript ile geliştirilmeye başlanmış ve geliştirilmeye devam eden bir web uygulamasıdır. Kullanıcı dostu arayüzü ve altyapısıyla, web projeleri için temel oluşturmak üzere tasarlanmaktadır.
+Bu proje, Django ve JavaScript ile geliştirilmeye başlanmış ve geliştirilmesine devam edilen bir web uygulamasıdır. Kullanıcı dostu arayüzü ve altyapısıyla, web projeleri için temel oluşturmak üzere tasarlanmaktadır.
 
 ![SAYFA1](https://github.com/user-attachments/assets/68efb936-0cfd-4857-91fa-9724ca406d64)
 ![SAYFA2](https://github.com/user-attachments/assets/a201d105-f9b3-4409-8f8d-97cd8a03707b)
