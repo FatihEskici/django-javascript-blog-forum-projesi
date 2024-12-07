@@ -1,0 +1,29 @@
+body {
+    background-color: #f8f9fa; /* Açık gri arka plan */
+}
+
+h1, h2, h3 {
+    color: #343a40; /* Koyu başlık rengi */
+    text-align: center; /* Başlıkları ortala */
+}
+
+a {
+    color: #007bff; /* Mavi bağlantı rengi */
+}
+
+.btn {
+    border-radius: 5px; /* Butonların köşelerini yuvarlat */
+    transition: background-color 0.3s; /* Buton arka plan geçiş efekti */
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Buton üzerine gelindiğinde arka plan rengi */
+}
+
+.table {
+    background-color: #ffffff; /* Tablo arka planı beyaz */
+}
+
+.alert {
+    border-radius: 5px; /* Uyarı kutularının köşelerini yuvarlat */
+}

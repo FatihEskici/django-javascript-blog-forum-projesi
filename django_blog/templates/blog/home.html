@@ -1,0 +1,150 @@
+{% extends 'blog/base.html' %}
+
+{% load static %}
+
+{% block title %}Blog Home{% endblock %}
+
+{% block content %}
+    <div style="margin-left: 120px;">
+        <h1>Blog Posts</h1>
+
+        <a href="{% url 'create-post' %}" class="btn btn-primary mb-3">Yeni Yazı Ekle</a>
+
+        <!-- Kategori Filtresi -->
+        <div class="mb-4">
+            <form method="get" action="{% url 'blog-home' %}">
+                <label for="category">Kategorilere Göre Filtrele:</label>
+                <select name="category" id="category" class="form-control" onchange="this.form.submit()">
+                    <option value="">Tüm Kategoriler</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}" {% if category.id|stringformat:"s" == request.GET.category %}selected{% endif %}>
+                            {{ category.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+
+        <!-- Öne Çıkan Gönderiler -->
+        {% if featured_posts %}
+            {% include 'blog/includes/featured_posts.html' %}
+        {% endif %}
+
+        <!-- Popüler Gönderiler -->
+        {% if popular_posts %}
+            {% include 'blog/includes/popular_posts.html' %}
+        {% endif %}
+
+        <!-- Son Yorumlar -->
+        {% if recent_comments %}
+            <div class="mb-5">
+                <h2>Son Yorumlar</h2>
+                <div class="list-group">
+                    {% for comment in recent_comments %}
+                        <div class="list-group-item">
+                            <strong>{{ comment.name }}</strong> yorum yaptı:
+                            <p>{{ comment.body|truncatewords:15 }}</p>
+                            <small>Gönderi: <a href="{% url 'post-detail' comment.post.id %}">{{ comment.post.title }}</a> - {{ comment.created_at|date:"d/m/Y H:i" }}</small>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Tüm Gönderiler Başlığı -->
+        <h2>Tüm Gönderiler</h2> <!-- Başlık eklendi -->
+
+        <!-- Tüm Gönderiler -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-top: 20px;">
+            <div style="flex: 1; margin-right: 20px;">
+                {% for post in posts %}
+    <div class="card mb-4">
+        {% if post.image %}  <!-- Resim var mı kontrolü -->
+            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="card-img-top" style="max-height: 200px; object-fit: cover;">
+        {% else %}
+            <img src="{% static 'path/to/default/image.png' %}" alt="Default Image" class="card-img-top" style="max-height: 200px; object-fit: cover;">  <!-- Varsayılan resim -->
+        {% endif %}
+        <div class="card-body">
+            <h2><a href="{% url 'post-detail' post.id %}" style="text-decoration: none; color: #007bff;">{{ post.title }}</a></h2>
+            <p>{{ post.content|truncatewords:30 }}</p>
+            <small class="text-muted">Yayınlanma Tarihi: {{ post.created_at|date:"F d, Y, H:i" }}</small>
+            <div class="text-right">
+                <a href="{% url 'post-detail' post.id %}" class="btn btn-link">Devamını Oku</a>
+            </div>
+        </div>
+    </div>
+{% empty %}
+    <p>No posts available.</p>
+{% endfor %}
+
+
+            </div>
+        </div>
+
+        <!-- Geri Bildirim Gönder ve Bülten Aboneliği -->
+        <div style="margin-top: 20px; display: flex; justify-content: space-between;">
+            <div style="flex: 1; margin-right: 10px;">
+                <button id="newsletter-button" class="btn btn-success">Bültenimize Abone Ol</button>
+                <div id="newsletter-form" style="display: none; margin-top: 10px;">
+                    <h3>Bültenimize Abone Olun</h3>
+                    <form action="{% url 'newsletter-subscribe' %}" method="post" class="form-inline">
+                        {% csrf_token %}
+                        <input type="email" name="email" class="form-control mr-2" placeholder="Email adresinizi girin" required>
+                        <button type="submit" class="btn btn-primary">Abone Ol</button>
+                    </form>
+                </div>
+            </div>
+
+            <div style="flex: 1; margin-left: 10px;">
+                <button id="feedback-button" class="btn btn-warning">Geri Bildirim Gönder</button>
+                <div id="feedback-form" style="display: none; margin-top: 10px;">
+                    <h3>Geri Bildirim Gönder</h3>
+                    <form method="POST" action="{% url 'feedback' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="name">Adınız:</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-posta:</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Mesajınız:</label>
+                            <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Gönder</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Geri bildirim ve bülten formlarının görünürlüğünü kontrol etme yapısı
+        document.getElementById('feedback-button').addEventListener('click', function() {
+            var feedbackForm = document.getElementById('feedback-form');
+            feedbackForm.style.display = feedbackForm.style.display === 'none' ? 'block' : 'none';
+        });
+
+        document.getElementById('newsletter-button').addEventListener('click', function() {
+            var newsletterForm = document.getElementById('newsletter-form');
+            newsletterForm.style.display = newsletterForm.style.display === 'none' ? 'block' : 'none';
+        });
+
+        // Sayfa yüklendiğinde kartların animasyonlu görünümü - çalışılacak
+        document.addEventListener("DOMContentLoaded", function() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s, transform 0.5s';
+                    card.style.opacity = 1;
+                    card.style.transform = 'translateY(0)';
+                }, index * 100); // Her kartın görünme süresi
+            });
+        });
+    </script>
+
+{% endblock %}

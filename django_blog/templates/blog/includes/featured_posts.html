@@ -1,0 +1,14 @@
+<div class="mb-5">
+    <h2>Öne Çıkan Gönderiler</h2>
+    <div class="card-deck">
+        {% for post in featured_posts %}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">{{ post.content|truncatewords:20 }}</p>
+                    <a href="{% url 'post-detail' post.id %}" class="btn btn-link">Devamını Oku</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

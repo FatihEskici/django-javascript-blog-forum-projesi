@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Lütfen Giriş Yapın{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card p-5 shadow-lg" style="width: 100%; max-width: 500px; margin: auto;">
+        <h3 class="text-center">Üye Girişi Gerekiyor</h3>
+        <p class="text-center">Post oluşturmak için üye girişi yapmalısınız.</p>
+        <div class="text-center mt-4">
+            <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Giriş Yap</a>
+            <a href="{% url 'register' %}" class="btn btn-secondary btn-lg">Kayıt Ol</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

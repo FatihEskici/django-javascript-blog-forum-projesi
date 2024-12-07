@@ -1,0 +1,59 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Yeni Yazı Ekle{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Yeni Yazı Ekle</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <!-- Başlık Alanı -->
+        <div class="form-group">
+            <label for="title">Başlık</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Başlık girin" required>
+        </div>
+
+        <!-- İçerik Alanı -->
+        <div class="form-group">
+            <label for="content">İçerik</label>
+            <textarea class="form-control" id="content" name="content" rows="10" placeholder="Yazı içeriğinizi buraya girin" required></textarea>
+        </div>
+
+        <!-- Kategori Seçimi -->
+        <div class="form-group">
+            <label for="category">Kategori</label>
+            <select class="form-control" id="category" name="category" required>
+                <option value="">Kategori Seçin</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Etiketler -->
+        <div class="form-group">
+            <label for="tags">Etiketler (Virgülle ayırarak ekleyin)</label>
+            <input type="text" class="form-control" id="tags" name="tags" placeholder="Etiket girin (örn: Python, Django)">
+        </div>
+
+        <!-- Öne Çıkan Görsel -->
+        <div class="form-group">
+            <label for="image">Öne Çıkan Görsel</label>
+            <input type="file" class="form-control-file" id="image" name="image">
+        </div>
+
+        <!-- Kaydet ve İptal Butonları -->
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+        <a href="{% url 'blog-home' %}" class="btn btn-secondary">İptal</a>
+    </form>
+
+
+    <form method="POST" enctype="multipart/form-data"> 
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Yazıyı Kaydet</button>
+    </form>
+    
+</div>
+{% endblock %}

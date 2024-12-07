@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Daha açık bir arka plan rengi */
+}
+
+.container {
+    padding: 20px;
+    background-color: #fff; /* İçerik alanının arka plan rengi */
+    border-radius: 8px; /* Kenarları yuvarlat */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Hafif gölge efekti */
+}
+
+.footer {
+    background-color: #333; /* Footer arka plan rengi */
+    color: white; /* Footer yazı rengi */
+    padding: 15px 0;
+    text-align: center; /* Ortaya hizala */
+}
+
+.navbar {
+    background-color: #4b5cc4; /* Navigasyon barı arka plan rengi */
+}
+
+.navbar a {
+    color: white; /* Navigasyon yazı rengi */
+}
+
+.navbar-right {
+    float: right; /* Sağda hizala */
+}
+
+/* Sidebar kapandığında uygulanacak stil */
+.sidebar-collapsed .sidebar {
+    display: none; /* Menü kapandığında görünmez yapar */
+}
+
+/* Menü açık olduğunda geçerli olacak temel stil */
+.sidebar {
+    width: 250px;
+    background-color: #4b5cc4;
+    color: #fff;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: auto;
+    transition: width 0.3s ease;
+}
+
+/* Menü kapandığında, kalan içeriği sola kaydır */
+.sidebar-collapsed .content {
+    margin-left: 0; /* Menü kapandığında içerik sola kayar */
+}
+
+/* Ana içerik alanı için stil */
+.content {
+    margin-left: 250px; /* Sidebar genişliğine eşit olmalı */
+    padding: 20px; /* İçerik alanının etrafında boşluk */
+    transition: margin-left 0.3s ease; /* Sidebar açıldığında kayma animasyonu */
+    background-color: #f5f5f5; /* Daha açık bir arka plan rengi */
+    height: 100vh; /* Tam yükseklik */
+}

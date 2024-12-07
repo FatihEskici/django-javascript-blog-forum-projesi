@@ -1,0 +1,11 @@
+<div class="mb-5">
+    <h2>Popüler Gönderiler</h2>
+    <div class="list-group">
+        {% for post in popular_posts %}
+            <a href="{% url 'post-detail' post.id %}" class="list-group-item list-group-item-action">
+                {{ post.title }}
+                <span class="badge badge-primary float-right">{{ post.views }} Görüntüleme</span>
+            </a>
+        {% endfor %}
+    </div>
+</div>
